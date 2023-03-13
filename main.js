@@ -13,23 +13,43 @@ mongoose.connection.on("error", (err) => {
   console.log(err.message);
 });
 
-//middleware
+//middlewares
 app.use(bodyParser.urlencoded({ extended: false })); //Parsear HTML req para obtener datos
 
-//Routers
+//routers
 
-// GET all the task
-app.get("/", function (req, res) {
-  res.send("Aqui retornan todas las tareas creadas");
-});
+app
+  .route("/")
 
-// POST one new task
-app.post("/", function (req, res) {
-  res.send(
-    "Aqui se crea una nueva tarea y se envia un mensaje {Success, Task Added}"
-  );
-});
+  // GET all the task
+  .get(function (req, res) {
+    res.send("Aqui retornan todas las tareas creadas");
+  })
 
+  // POST one new task
+  .post(function (req, res) {
+    res.send(
+      "Aqui se crea una nueva tarea y se envia un mensaje {Success, Task Added}"
+    );
+  })
+
+  // DELETE one task
+  .delete(function (req, res) {
+    res.send(" Aqui eliminamos una tarea, {Task eliminated}");
+  });
+
+app
+  .route("/task_id")
+
+  // GET one task
+  .get(function (req, res) {
+    res.send("Aqui mostramos pantalla para edicion de una tarea");
+  })
+
+  // edit one task
+  .put(function (req, res) {
+    res.send("Aqui se edita una tarea y se envia un mensaje {edit succesfull}");
+  });
 // inicializacion del servidor
 
 PORT = process.env.PORT || 3000;
