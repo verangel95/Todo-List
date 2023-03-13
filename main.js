@@ -2,7 +2,14 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-const { taskSchema } = require("./schemas");
+const { Task } = require("./schemas");
+const {
+  agregar,
+  obtenerVarias,
+  obtenerUna,
+  editaruna,
+  borrarruna,
+} = require("./crud");
 const bodyParser = require("body-parser");
 
 // Conexion con la Base de Datos
@@ -15,41 +22,59 @@ mongoose.connection.on("error", (err) => {
 
 //middlewares
 app.use(bodyParser.urlencoded({ extended: false })); //Parsear HTML req para obtener datos
-
+app.use(bodyParser.json()); // Parsear JSON
 //routers
 
 app
   .route("/")
 
   // GET all the task
-  .get(function (req, res) {
-    res.send("Aqui retornan todas las tareas creadas");
+  .get(async function (req, res) {
+    const allTasks = await obtenerVarias();
+    res.json(allTasks);
   })
 
   // POST one new task
-  .post(function (req, res) {
-    res.send(
-      "Aqui se crea una nueva tarea y se envia un mensaje {Success, Task Added}"
-    );
+  .post(async function (req, res) {
+    const newtask = req.body;
+    if (
+      (typeof newtask.task === "string") &
+      (typeof newtask.completed === "boolean")
+    ) {
+      const insercion = await agregar(newtask.task, newtask.completed);
+      res.json(insercion);
+    } else {
+      res.json(
+        "Parametros introducidos incorrectos, por favor vuelva a intentar"
+      );
+    }
   })
 
   // DELETE one task
-  .delete(function (req, res) {
-    res.send(" Aqui eliminamos una tarea, {Task eliminated}");
+  .delete(async function (req, res) {
+    const erased = req.body._id;
+    const borrar = await borrarruna(erased);
+    res.json("Task eliminated");
   });
 
 app
   .route("/task_id")
 
   // GET one task
-  .get(function (req, res) {
-    res.send("Aqui mostramos pantalla para edicion de una tarea");
+  .get(async function (req, res) {
+    const onetask = req.query._id;
+    const consulta = await obtenerUna(onetask);
+    res.json(consulta);
   })
 
   // edit one task
-  .put(function (req, res) {
-    res.send("Aqui se edita una tarea y se envia un mensaje {edit succesfull}");
+  .put(async function (req, res) {
+    const qid = req.query._id;
+    const update = req.body;
+    const consulta = await editaruna(qid, update);
+    res.json(consulta);
   });
+
 // inicializacion del servidor
 
 PORT = process.env.PORT || 3000;
