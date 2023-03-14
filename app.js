@@ -1,24 +1,19 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
+const { databaseconnect } = require("./DB/connect");
 const express = require("express");
 const app = express();
-const { Task } = require("./schemas");
 const {
   agregar,
   obtenerVarias,
   obtenerUna,
   editaruna,
   borrarruna,
-} = require("./crud");
+} = require("./Controllers/crud.js");
 const bodyParser = require("body-parser");
 
 // Conexion con la Base de Datos
-mongoose.connect(process.env.MONGO_URI, console.log("BD esta conectada..."));
 
-mongoose.connection.on("error", (err) => {
-  console.log("No se pudo conectar la BD");
-  console.log(err.message);
-});
+databaseconnect();
 
 //middlewares
 app.use(bodyParser.urlencoded({ extended: false })); //Parsear HTML req para obtener datos

@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "db8bd313-2263-4204-8fef-3a36a1031e12",
+		"name": "TodoList",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24977425"
+	},
+	"item": [
+		{
+			"name": "Agregar nueva tarea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"console.log(pm.request)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\": \"{{$randomPhrase}}\",\r\n    \"completed\": {{$randomBoolean}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LocalHost}}",
+					"host": [
+						"{{LocalHost}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todas las tareas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const test_id = pm.response.json()[0][\"_id\"]\r",
+							"\r",
+							"pm.collectionVariables.set(\"test_id\", test_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LocalHost}}",
+					"host": [
+						"{{LocalHost}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una tarea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LocalHost}}/task_id?_id={{test_id}}",
+					"host": [
+						"{{LocalHost}}"
+					],
+					"path": [
+						"task_id"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "{{test_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una tarea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"task\": \"editada20\",\r\n    \"completed\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LocalHost}}/task_id?_id={{test_id}}",
+					"host": [
+						"{{LocalHost}}"
+					],
+					"path": [
+						"task_id"
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "{{test_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una tarea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"console.log(pm.request.body)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"{{test_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{LocalHost}}",
+					"host": [
+						"{{LocalHost}}"
+					],
+					"query": [
+						{
+							"key": "taskid",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "variable_key",
+			"value": ""
+		},
+		{
+			"key": "test_id",
+			"value": ""
+		}
+	]
+}

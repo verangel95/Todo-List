@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Task } = require("./schemas");
+const { Task } = require("../Models/schemas");
 
 // Definicion de funciones CRUD
 
