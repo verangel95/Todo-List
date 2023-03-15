@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "db8bd313-2263-4204-8fef-3a36a1031e12",
 		"name": "TodoList",
+		"description": "API para realizar operaciones CRUD de una Todo-List, el esquema de la BD toma dos parametros:\n\ntask: String,\n\ncompleted: Boolean",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24977425"
 	},
@@ -37,9 +38,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{LocalHost}}",
+					"raw": "{{Host}}",
 					"host": [
-						"{{LocalHost}}"
+						"{{Host}}"
 					]
 				}
 			},
@@ -68,9 +69,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{LocalHost}}",
+					"raw": "{{Host}}",
 					"host": [
-						"{{LocalHost}}"
+						"{{Host}}"
 					]
 				}
 			},
@@ -95,9 +96,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{LocalHost}}/task_id?_id={{test_id}}",
+					"raw": "{{Host}}/task_id?_id={{test_id}}",
 					"host": [
-						"{{LocalHost}}"
+						"{{Host}}"
 					],
 					"path": [
 						"task_id"
@@ -132,7 +133,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"task\": \"editada20\",\r\n    \"completed\": true\r\n}",
+					"raw": "{\r\n        \"task\": \"editada40\",\r\n    \"completed\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -140,9 +141,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{LocalHost}}/task_id?_id={{test_id}}",
+					"raw": "{{Host}}/task_id?_id={{test_id}}",
 					"host": [
-						"{{LocalHost}}"
+						"{{Host}}"
 					],
 					"path": [
 						"task_id"
@@ -188,9 +189,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{LocalHost}}",
+					"raw": "{{Host}}",
 					"host": [
-						"{{LocalHost}}"
+						"{{Host}}"
 					],
 					"query": [
 						{
@@ -204,6 +205,26 @@
 			"response": []
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
 			"key": "variable_key",
@@ -212,6 +233,11 @@
 		{
 			"key": "test_id",
 			"value": ""
+		},
+		{
+			"key": "Host",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
